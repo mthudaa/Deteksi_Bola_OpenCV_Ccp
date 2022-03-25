@@ -10,7 +10,8 @@ void main(){
 	Mat img, hsv, mask, blur;
 	VideoCapture cap(0);
 
-	int h_low = 0, s_low = 50, v_low = 140;
+	//selektor warna kuning
+	int h_low = 0, s_low = 127, v_low = 140;
 	int h_hi = 26, s_hi = 255, v_hi = 255;
 
 	//slider untuk mengatur range nilai HSV
@@ -28,6 +29,7 @@ void main(){
 		cap.read(img);
 		cvtColor(img, hsv, COLOR_BGR2HSV);
 		inRange(hsv, low, hi, mask);
+		Canny(mask, mask, 30, 50, 3);
 		GaussianBlur(mask, blur, Size(11, 11), 0);
 		
 		vector<Vec3f> circles;
@@ -43,7 +45,7 @@ void main(){
 		}
 		
 		imshow("image ori", img);
-		imshow("image selection", mask);
+		imshow("image edge", mask);
 		waitKey(1);
 	}
 }
